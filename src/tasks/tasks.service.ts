@@ -3,7 +3,7 @@ import { Task, TaskStatus } from './task_model/task_model';
 import { v4 as uuid } from 'uuid';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { FilterTaskDto } from './dto/filter-task.dto';
-import { filter, retry } from 'rxjs';
+import { filter, retry, throwError } from 'rxjs';
 
 @Injectable()
 export class TasksService {
@@ -32,10 +32,18 @@ export class TasksService {
   }
 
   getTaskById(id: string): Task {
-    return this.tasks.find((task) => task.id === id);
+    const found = this.tasks.find((task) => task.id === id);
+
+    if (!found) throw new Error();
+
+    return found;
   }
 
   deleteTaskById(id: string): void {
+    const found = this.tasks.find((task) => task.id === id);
+
+    if (!found) throw new Error();
+
     this.tasks = this.tasks.filter((task) => task.id !== id);
   }
 

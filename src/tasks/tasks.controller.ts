@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -25,12 +26,24 @@ export class TasksController {
 
   @Get('/:id')
   getTaskById(@Param('id') id: string): Task {
-    return this.tasksService.getTaskById(id);
+    try {
+      const task = this.tasksService.getTaskById(id);
+
+      return task;
+    } catch (err) {
+      throw new NotFoundException('Task with id: ' + id + ' not found');
+    }
   }
 
   @Delete('/:id')
   deleteTaskById(@Param('id') id: string): void {
-    return this.tasksService.deleteTaskById(id);
+    try {
+      this.tasksService.deleteTaskById(id);
+    } catch (err) {
+      throw new NotFoundException(
+        'Task with id: ' + id + " not found, deletion couldn't be completed",
+      );
+    }
   }
 
   @Patch('/:id/status')
@@ -38,8 +51,13 @@ export class TasksController {
     @Param('id') id: string,
     @Body('status') status: TaskStatus,
   ): void {
-    console.log(id, status);
-    return this.tasksService.updateTaskById(id, status);
+    try {
+      this.tasksService.updateTaskById(id, status);
+    } catch (err) {
+      throw new NotFoundException(
+        'Task with id: ' + id + " not found, patch couldn't be completed",
+      );
+    }
   }
 
   @Get()

@@ -3,26 +3,26 @@ import { TaskStatus } from './task_model/task-status.enum';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { FilterTaskDto } from './dto/filter-task.dto';
 import { filter, retry, throwError } from 'rxjs';
-import { TaskRepository } from './tasks.repository';
+//import { TaskRepository } from './tasks.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './task.entity';
 
 @Injectable()
 export class TasksService {
   //Replacing the old storage with database storage
-  constructor(
-    @InjectRepository(TaskRepository)
-    private taskRepository: TaskRepository){}
+  // constructor(
+  //   @InjectRepository(TaskRepository)
+  //   private taskRepository: TaskRepository){}
 
-  //since we are using async function, the return type will be a promise therefore we need to declared the type promise as the returned value 
-  async getTaskById(id: string): Promise<Task>{
-    const found = await this.taskRepository.findOne(id)
+  // //since we are using async function, the return type will be a promise therefore we need to declared the type promise as the returned value 
+  // async getTaskById(id: string): Promise<Task>{
+  //   const found = await this.taskRepository.findOne(id)
 
-    if(!found)
-      throw new Error();
+  //   if(!found)
+  //     throw new Error();
 
-    return found; 
-  }
+  //   return found 
+  // }
 
   // //since the task model is Type Task, we can add more type safety by adding the type to the method and the field
   // private tasks: Task[] = [];

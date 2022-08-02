@@ -20,16 +20,16 @@ import {TaskStatus } from './task_model/task-status.enum';
 export class TasksController {
   constructor(private tasksService: TasksService) {}
 
-  @Get('/:id')
-  getTaskById(@Param('id') id: string): Promise<Task>{
-    try {
-          const task = this.tasksService.getTaskById(id);
+  // @Get('/:id')
+  // getTaskById(@Param('id') id: string): Promise<Task>{
+  //   try {
+  //         const task = this.tasksService.getTaskById(id);
     
-          return task;
-        } catch (err) {
-          throw new NotFoundException('Task with id: ' + id + ' not found');
-        }
-  }
+  //         return task;
+  //       } catch (err) {
+  //         throw new NotFoundException('Task with id: ' + id + ' not found');
+  //       }
+  // }
 
   // @Post()
   // createTask(@Body() createTaskDto: CreateTaskDto): Task {
